@@ -56,5 +56,46 @@ public class TaskManager {
                 System.err.println("Unexpected error occurred: " + e.getMessage());
             }
         }
+        scanner.close();
+    }
+
+    private static void printMenu(){}
+
+    private static void addTask(Scanner scanner){}
+
+    private static void updateTask(Scanner scanner){}
+
+    private static void deleteTask(Scanner scanner){}
+
+    private static void listTasks(){}
+
+    private static void markTaskComplete(Scanner scanner, boolean complete){}
+
+    private static int promptForTaskId(Scanner scanner, String prompt){}
+
+    private static int nextId(){}
+
+    private static Task findTaskById(int id){}
+
+    private static void loadTasks(){}
+
+    private static void saveTasks(){}
+
+    private static String escapeJson(String value){}
+
+    private static String unescapeJscon(String value){}
+
+    private static class Task {
+        private int id;
+        private String title;
+        private String description;
+        private boolean completed;
+
+        private Task(int id, String title, String description, boolean completed) {
+            this.id = id;
+            this.title = title;
+            this.description = description;
+            this.completed = completed;
+        }
     }
 }
