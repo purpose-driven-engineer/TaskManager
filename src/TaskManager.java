@@ -1,3 +1,5 @@
+import com.sun.security.jgss.GSSUtil;
+
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -59,7 +61,17 @@ public class TaskManager {
         scanner.close();
     }
 
-    private static void printMenu(){}
+    private static void printMenu(){
+        System.out.println();
+        System.out.println("1. Add a task");
+        System.out.println("2. Update task");
+        System.out.println("3. Delete task");
+        System.out.println("4. List tasks");
+        System.out.println("5. Mark task completed");
+        System.out.println("6. Mark task uncompleted");
+        System.out.println("7. Save tasks");
+        System.out.println("8. Exit App");
+    }
 
     private static void addTask(Scanner scanner){}
 
