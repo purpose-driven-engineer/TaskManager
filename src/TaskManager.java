@@ -73,7 +73,23 @@ public class TaskManager {
         System.out.println("8. Exit App");
     }
 
-    private static void addTask(Scanner scanner){}
+    private static void addTask(Scanner scanner){
+        System.out.println("Title");
+        String title = scanner.nextLine().trim();
+
+        if (title.isEmpty()){
+            System.out.println("Task title cannot be empty");
+            return;
+        }
+
+        System.out.println("Description (optional)");
+        String description = scanner.nextLine().trim();
+
+        Task task = new Task(nextId(), title, description, false);
+        task.add(task);
+        saveTasks();
+        System.out.println("Task added successfully");
+    }
 
     private static void updateTask(Scanner scanner){}
 
