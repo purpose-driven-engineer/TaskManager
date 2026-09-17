@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# All IDE files
+.idea/*
+
 # Log file
 *.log
 

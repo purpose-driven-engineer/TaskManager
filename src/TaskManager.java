@@ -91,7 +91,37 @@ public class TaskManager {
         System.out.println("Task added successfully");
     }
 
-    private static void updateTask(Scanner scanner){}
+    private static void updateTask(Scanner scanner){
+        if(tasks.isEmpty()){
+            System.out.println("No task to update");
+            return;
+        }
+
+        listTasks();
+        int id = promptForTaskId(scanner, "Enter task ID needing update");
+        Task task = findTaskById(id);
+
+        if(task == null){
+            System.out.println("Task with ID: " +  id + " Not Found!");
+            // return;
+        }
+
+        System.out.print("New title (leave blank to keep '" + task.title + "'): ");
+        String title = scanner.nextLine().trim();
+        if(!title.isEmpty()){
+            task.title = title;
+        }
+
+        System.out.print("New description(leave blank to keep current description): ");
+        String description = scanner.nextLine().trim();
+        if (!description.isEmpty()){
+            task.description = description;
+        }
+
+        saveTasks();
+        System.out.println("Task updated successfully.");
+
+    }
 
     private static void deleteTask(Scanner scanner){}
 
