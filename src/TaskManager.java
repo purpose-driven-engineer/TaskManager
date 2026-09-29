@@ -1,6 +1,7 @@
 import com.sun.security.jgss.GSSUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ public class TaskManager {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("==Task Manager===");
+        System.out.println("===Task Manager===");
 
         boolean running = true;
         while(running){
@@ -86,13 +87,13 @@ public class TaskManager {
         String description = scanner.nextLine().trim();
 
         Task task = new Task(nextId(), title, description, false);
-        task.add(task);
+        tasks.add(task);
         saveTasks();
         System.out.println("Task added successfully");
     }
 
-    private static void updateTask(Scanner scanner){
-        if(tasks.isEmpty()){
+    private static void updateTask(Scanner scanner) {
+        if (tasks.isEmpty()) {
             System.out.println("No task to update");
             return;
         }
@@ -121,11 +122,32 @@ public class TaskManager {
         saveTasks();
         System.out.println("Task updated successfully.");
 
+
     }
 
-    private static void deleteTask(Scanner scanner){}
+    private static void deleteTask(Scanner scanner){
+        if(tasks.isEmpty()){
+            System.out.println("There are no tasks to delete");
+            return;
+        }
 
-    private static void listTasks(){}
+        listTasks();
+        int id = promptForTaskId(scanner, "Enter task ID to be deleted: ");
+        Task task = findTaskById(id);
+
+        if (task == null){
+            System.out.println("Task with ID " + id + " does not exist.");
+            return;
+        }
+
+        tasks.remove(task);
+        saveTasks();
+        System.out.println("Task deleted successfully");
+    }
+
+    private static void listTasks(){
+
+    }
 
     private static void markTaskComplete(Scanner scanner, boolean complete){}
 
@@ -141,7 +163,7 @@ public class TaskManager {
 
     private static String escapeJson(String value){}
 
-    private static String unescapeJscon(String value){}
+    private static String unescapeJson(String value){}
 
     private static class Task {
         private int id;
