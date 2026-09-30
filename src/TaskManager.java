@@ -162,10 +162,29 @@ public class TaskManager {
     }
 
     private static void markTaskComplete(Scanner scanner, boolean complete){
+        if(tasks.isEmpty()){
+            System.out.println("There are no tasks to update.");
+            return;
+        }
 
+        listTasks();
+        int id = promptForTaskId((Scanner scanner, "Enter task ID: ");
+        Task task = findTaskById(id);
+
+        if(task == null){
+            System.out.println("Task with ID " + id + " was not found");
+            return;
+        }
+
+        task.completed = complete;
+        saveTasks();
+        String message = complete ? "marked as complete." : "marked as incomplete.";
+        System.out.println("Task " + id + " " + message);
     }
 
-    private static int promptForTaskId(Scanner scanner, String prompt){}
+    private static int promptForTaskId(Scanner scanner, String prompt){
+
+    }
 
     private static int nextId(){}
 
