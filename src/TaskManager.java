@@ -199,7 +199,15 @@ public class TaskManager {
         }
     }
 
-    private static int nextId(){}
+    private static int nextId(){
+        int maxId = 0;
+        for (Task task : tasks){
+            if(task.id > maxId){
+                maxId = task.id;
+            }
+        }
+        return maxId + 1;
+    }
 
     private static Task findTaskById(int id){}
 
