@@ -183,7 +183,20 @@ public class TaskManager {
     }
 
     private static int promptForTaskId(Scanner scanner, String prompt){
-
+        while(true) {
+            System.out.print(prompt);
+            String raw = scanner.nextLine().trim();
+            try{
+                int id = Integer.parseInt(raw);
+                if(id <= 0){
+                    System.out.println("ID must be a positive number.");
+                    continue;
+                }
+                return id;
+            } catch (NumberFormatException e){
+                System.out.println("Invalid ID: Please enter a valid positive integer.");
+            }
+        }
     }
 
     private static int nextId(){}
