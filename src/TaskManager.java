@@ -146,10 +146,24 @@ public class TaskManager {
     }
 
     private static void listTasks(){
+        if (tasks.isEmpty()){
+            System.out.println("No tasks available.");
+            return;
+        }
 
+        System.out.println("\nAvailable Tasks: ");
+        for (Task task : tasks){
+            String status = task.completed ? "[Done" : "[Pending";
+            System.out.println(status + " ID: " + task.id + " | " + task.title);
+            if(!task.description.isEmpty()){
+                System.out.println("   Description: "+ task.description);
+            }
+        }
     }
 
-    private static void markTaskComplete(Scanner scanner, boolean complete){}
+    private static void markTaskComplete(Scanner scanner, boolean complete){
+
+    }
 
     private static int promptForTaskId(Scanner scanner, String prompt){}
 
