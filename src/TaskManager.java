@@ -209,7 +209,14 @@ public class TaskManager {
         return maxId + 1;
     }
 
-    private static Task findTaskById(int id){}
+    private static Task findTaskById(int id){
+        for (Task task : tasks){
+            if (task.id == id){
+                return task;
+            }
+        }
+        return null;
+    }
 
     private static void loadTasks(){}
 
