@@ -1,9 +1,15 @@
 import com.sun.security.jgss.GSSUtil;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TaskManager {
 
@@ -218,7 +224,36 @@ public class TaskManager {
         return null;
     }
 
-    private static void loadTasks(){}
+    private static void loadTasks(){
+        Path filePath = Path.of(DATA_FILE);
+        if(!Files.exists(filePath)){
+            return;
+        }
+
+        try{
+            String content = Files.readString(filePath, StandardCharsets.UTF_8);
+            if (content == null || content.trim().isEmpty()){
+                return;
+            }
+
+            Pattern pattern = Pattern.compile("\\{\\s*\"id\"\\s*:\\s*(\\d+)\\s*,\\s*\"title\"\\s*:\\s*\"((?:\\\\.|[^\"\\\\])*)\"\\s*,\\s*\"description\"\\s*:\\s*\"((?:\\\\.|[^\"\\\\])*)\"\\s*,\\s*\"completed\"\\s*:\\s*(true|false)\\s*\\}");
+            Matcher matcher = pattern.matcher(content);
+            tasks.clear();
+
+            while(matcher.find()){
+                int id = Integer.parseInt((matcher.group(1)));
+                String title = unescapeJson((matcher.group(2)));
+                String description = unescapeJson((matcher.group(3)));
+                boolean completed = Boolean.parseBoolean(matcher.group(4));
+                tasks.add(new Task(id, title, description, completed));
+            }
+
+            System.out.println("Loaded " + tasks.size() + " task(s) from " + DATA_FILE + ".");
+        } catch (IOException | IllegalArgumentException e){
+            System.err.println("Warning: not able to load tasks from " + DATA_FILE + ". Starting with empty list.");
+            tasks.clear();
+        }
+    }
 
     private static void saveTasks(){}
 
