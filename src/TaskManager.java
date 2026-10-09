@@ -287,7 +287,39 @@ public class TaskManager {
         }
     }
 
-    private static String escapeJson(String value){}
+    private static String escapeJson(String value){
+        if (value == null) {
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (char ch : value.toCharArray()){
+            switch(ch) {
+                case '\\':
+                    result.append("\\\\");
+                    break;
+                case '"':
+                    result.append("\\\");
+                    break;
+                case '\n':
+                    result.append("\\n");
+                    break;
+                case '\r':
+                    result.append("\\r");
+                    break;
+                case '\t':
+                    result.append("\\t");
+                    break;
+                default:
+                    if (ch < 0x20){
+                        result.append(String.format("\\u%04x", (int) ch));
+                    }else {
+                        result.append(ch);
+                    }
+                    break;
+            }
+        } return result.toString();
+    }
 
     private static String unescapeJson(String value){}
 
