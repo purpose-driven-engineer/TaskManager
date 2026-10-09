@@ -1,5 +1,3 @@
-import com.sun.security.jgss.GSSUtil;
-import com.sun.source.tree.BreakTree;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -8,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
