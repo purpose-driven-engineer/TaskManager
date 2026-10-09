@@ -1,4 +1,5 @@
 import com.sun.security.jgss.GSSUtil;
+import com.sun.source.tree.BreakTree;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -321,7 +322,57 @@ public class TaskManager {
         } return result.toString();
     }
 
-    private static String unescapeJson(String value){}
+    private static String unescapeJson(String value){
+        if(value == null){
+            return "";
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (int i =0; i < value.length(); i++){
+            char ch = value.charAt(i);
+            if (ch == '\\' && i + 1 < value.length()){
+                char next = value.charAt(i + 1);
+                switch (next){
+                    case '\\':
+                        result.append('\\');
+                        break;
+                    case '"':
+                        result.append('"');
+                        break;
+                    case 'n':
+                        result.append('\n');
+                        break;
+                    case 'r':
+                        result.append('\r');
+                        break;
+                    case 't':
+                        result.append('\t');
+                        break;
+                    case 'u':
+                        if(i + 5 < value.length()) {
+                            String hex = value.substring(i + 2, i + 6);
+                            try{
+                                result.append((char) Integer.parseInt(hex, 16));
+
+                                i += 5;
+                                break;
+                            } catch (NumberFormatException e){
+                                result.append(next);
+                                break;
+                            }
+                        }
+                        result.append(next);
+                        break;
+                    default:
+                        result.append(next);
+                        break;
+                }
+                i++;
+            } else {
+                result.append(ch);
+            }
+        } return result.toString();
+    }
 
     private static class Task {
         private int id;
