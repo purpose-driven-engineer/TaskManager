@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -255,7 +256,36 @@ public class TaskManager {
         }
     }
 
-    private static void saveTasks(){}
+    private static void saveTasks(){
+        try {
+            StringBuilder json = new StringBuilder();
+            json.append("[\n");
+            for (int i = 0; i < tasks.size(); i++){
+                Task task = tasks.get(i);
+                json.append("{\n");
+                json.append("   \"id\": ").append(task.id).append(",\n");
+                json.append("    \"title\": ").append(escapeJson(task.title)).append("\",\n");
+                json.append("     \"description\": ").append(escapeJson(task.description)).append("\", \n");
+                json.append("     \"completed\": ").append(task.completed).append("\n");
+                json.append("    }");
+                if (i < tasks.size() -1){
+                    json.append(" ,");
+                }
+            }
+            json.append("\n");
+
+            Files.writeString(
+                    Path.of(DATA_FILE),
+                    json.toString(),
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING,
+                    StandardOpenOption.WRITE
+            );
+        }catch (IOException e){
+            System.out.println("Error saving tasks: " + e.getMessage());
+        }
+    }
 
     private static String escapeJson(String value){}
 
